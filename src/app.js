@@ -1,8 +1,8 @@
 /*
 * @Author: sunduo
 * @Date:   2017-12-06 16:54:07
-* @Last Modified by:   sunduo
-* @Last Modified time: 2017-12-08 16:10:41
+* @Last Modified by:   allen100309
+* @Last Modified time: 2017-12-09 00:17:29
 */
 import Vue from 'vue';
 //导入路由模块
@@ -22,7 +22,14 @@ Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 //注册使用VueResource
 // Vue.use(VueResource);
-
+// 把post发送的数据，转换成json的形式在进行发送
+import qs from 'qs';
+Axios.interceptors.request.use((config) => {
+    config.data = qs.stringify(config.data);
+    return config;
+}, function(error) {
+    return Promise.reject(error);
+});
 //注册使用路由组件
 Vue.use(VueRouter);
 

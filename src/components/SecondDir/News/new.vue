@@ -7,7 +7,10 @@
           <img class="mui-media-object mui-pull-left" :src="item.img_url">
           <div class="mui-media-body">
             {{item.title}}
-            <p class="mui-ellipsis"><span class="mui-pull-left">发表时间: {{item.add_time | fmtdate('YYYY-MM-DD')}}</span><span class="mui-pull-right">点击数: {{item.click}}</span></p>
+            <p class="cont">
+              <span>发表时间: {{item.add_time | fmtdate('YYYY-MM-DD')}}</span>
+              <span>点击数: {{item.click}}</span>
+            </p>
           </div>
         </router-link>
       </li>
@@ -56,10 +59,14 @@
     white-space: nowrap;
     font-size: 15px;
   }
-  .mui-ellipsis {
-    line-height: 22px;
-  }
   .mui-content>.mui-table-view:first-child {
     margin-top: 0;
+  }
+  .cont {
+    font-size: 12px;
+    color: rgb(43, 194, 247);
+    display: flex;
+    justify-content: space-between;
+    line-height: 22px;
   }
 </style>

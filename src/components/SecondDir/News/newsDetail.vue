@@ -12,19 +12,18 @@
       <div class="comment">
         <!--添加评论-->
         <h4>提交评论</h4>
-
         <div class="submitcomment">
-            <textarea placeholder="请输入评论内容"></textarea>
-            <button class="mui-btn mui-btn-primary">发表</button>
+            <textarea placeholder="请输入评论内容" v-model="content"></textarea>
+            <button class="mui-btn mui-btn-primary" @click="postcomments">发表</button>
         </div>
         <div class="title">
             <h4>评论列表</h4>
         </div>
         <!--评论列表-->
-        <div class="item">
-            <div class="content">评论内容</div>
+        <div class="item" v-for="(item,index) in comments" :key="index">
+            <div class="content">{{item.content}}</div>
             <div>
-                <span class="user">匿名用户</span>  <span>时间</span>
+                <span class="user">{{item.user_name}}</span>  <span>{{item.add_time | fmtdate("YYYY-MM-DD HH:mm:ss")}}</span>
             </div>
         </div>
 
@@ -42,23 +41,69 @@
     data(){
       return {
         id:this.$route.params.id,
-        data:{}
+        data:{},
+        comments:[],
+        content:''
       }
     },
     created:function(){
       this.getDetail()
+      this.getcomments()
     },
     watch:{
       '$route.path':function(){
         this.getDetail()
+        this.getcomments()
       }
     },
     methods:{
+      //获取新闻详细信息
       getDetail(){
         this.$http.get(this.$root.config+'/api/getnew/'+this.id)
           .then((res)=>{
             this.data = res.data.message[0];
             console.log(this.data)
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+      },
+      //获取评论信息
+      getcomments(){
+        this.$http.get(this.$root.config+'/api/getcomments/'+this.id, {
+              params: {
+                'pageindex':1
+              }
+            })
+          .then((res)=>{
+            this.comments = res.data.message;
+            console.log(this.comments)
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+      },
+      //提交评论信息
+      postcomments(){
+        this.$http.post(this.$root.config+'/api/postcomment/'+this.id, {content:this.content},{
+          //设置请求类型，否则会报错误
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+
+          },
+          transformResponse: [function transformResponse(data) {
+            /*eslint no-param-reassign:0*/
+            if (typeof data === 'string') {
+              try {
+                data = JSON.parse(data);
+              } catch (e) { /* Ignore */ }
+            }
+            return data;
+          }]
+        })
+          .then((res)=>{
+            console.log(this.content)
+            console.log(res.data)
           })
           .catch((err)=>{
             console.log(err)
