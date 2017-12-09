@@ -1,12 +1,8 @@
 /*
 * @Author: allen100309
 * @Date:   2017-12-09 11:51:29
-* @Last Modified by:   sunduo
-<<<<<<< HEAD
-* @Last Modified time: 2017-12-10 02:21:44
-=======
-* @Last Modified time: 2017-12-09 21:16:42
->>>>>>> 0b0ee6463bb1e9b141418dc3f652765c00553afb
+* @Last Modified by:   allen100309
+* @Last Modified time: 2017-12-10 02:25:42
 */
 import Vue from 'vue';
 //导入mint-ul插件
