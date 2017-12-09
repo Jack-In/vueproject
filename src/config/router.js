@@ -2,7 +2,7 @@
 * @Author: allen100309
 * @Date:   2017-12-09 11:52:02
 * @Last Modified by:   allen100309
-* @Last Modified time: 2017-12-09 12:01:40
+* @Last Modified time: 2017-12-10 01:35:46
 */
 
 import Vue from 'vue';
@@ -39,6 +39,7 @@ import Search from '../components/Search/search.vue';
 import News from '../components/SecondDir/News/new.vue';
 import NewsDetail from '../components/SecondDir/News/newsDetail.vue';
 import Share from '../components/SecondDir/Share/share.vue';
+import ShareDetail from '../components/SecondDir/Share/shareDetail.vue';
 import Buy from '../components/SecondDir/Buy/buy.vue';
 import Feedback from '../components/SecondDir/Feedback/feedback.vue';
 import Video from '../components/SecondDir/Video/video.vue';
@@ -66,12 +67,15 @@ const router = new VueRouter({
     { name:'news' , path: '/news', component: News },
     { name:'newsDetail' , path: '/news/:id', component: NewsDetail },
     { name:'share' , path: '/share', component: Share },
+    { name:'shares' , path: '/share/:id', component: Share },
+    { name:'shareDetail' , path: '/shareDetail/:id', component: ShareDetail },
     { name:'buy' , path: '/buy', component: Buy },
     { name:'feedback' , path: '/feedback', component: Feedback },
     { name:'video' , path: '/video', component: Video },
     { name:'contact' , path: '/contact', component: Contact },
   ]
 });
+//给Vue原型帮绑上Axios
 Vue.prototype.$http = Axios;
 Vue.prototype.axios = Axios;
 export default router;
