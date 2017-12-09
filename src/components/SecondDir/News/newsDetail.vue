@@ -28,7 +28,7 @@
         </div>
 
         <div class="more">
-            <button class="mui-btn mui-btn-primary mui-btn-outlined">加载更多</button>
+            <button class="mui-btn mui-btn-primary mui-btn-outlined" @click="more">加载更多</button>
         </div>
 
     </div>
@@ -43,7 +43,8 @@
         id:this.$route.params.id,
         data:{},
         comments:[],
-        content:''
+        content:'',
+        page:1
       }
     },
     created:function(){
@@ -72,11 +73,11 @@
       getcomments(){
         this.$http.get(this.$root.config+'/api/getcomments/'+this.id, {
               params: {
-                'pageindex':1
+                'pageindex':this.page
               }
             })
           .then((res)=>{
-            this.comments = res.data.message;
+            this.comments= this.comments.concat(res.data.message)
             console.log(this.comments)
           })
           .catch((err)=>{
@@ -85,29 +86,35 @@
       },
       //提交评论信息
       postcomments(){
-        this.$http.post(this.$root.config+'/api/postcomment/'+this.id, {content:this.content},{
+        if(this.content.length === 0){
+          this.$toast('请输入评论内容！');
+        }else{
+          this.$http.post(this.$root.config+'/api/postcomment/'+this.id, 'content='+this.content,{
           //设置请求类型，否则会报错误
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-
-          },
-          transformResponse: [function transformResponse(data) {
-            /*eslint no-param-reassign:0*/
-            if (typeof data === 'string') {
-              try {
-                data = JSON.parse(data);
-              } catch (e) { /* Ignore */ }
-            }
-            return data;
-          }]
+          // headers: {
+          //   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+          // }
         })
           .then((res)=>{
             console.log(this.content)
             console.log(res.data)
+            this.$toast(res.data.message);
+            this.comments.unshift({
+              user_name: '匿名用户',
+              add_time: new Date(),
+              content: this.content
+            })
+            this.content = "";
           })
           .catch((err)=>{
             console.log(err)
           })
+        }
+      },
+      //加载更多
+      more(){
+        this.page++;
+        this.getcomments()
       }
     }
   };
