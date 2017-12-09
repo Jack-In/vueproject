@@ -2,7 +2,7 @@
 * @Author: sunduo
 * @Date:   2017-12-06 16:54:07
 * @Last Modified by:   allen100309
-* @Last Modified time: 2017-12-09 20:29:53
+* @Last Modified time: 2017-12-10 02:16:19
 */
 import Vue from 'vue';
 
@@ -37,7 +37,7 @@ let vm = new Vue({
     // 添加请求拦截器
     this.$http.interceptors.request.use(function (config) {
       // 在发送请求之前做些什么
-      // this.$indicator.open('加载中...');
+      this.$indicator.open('加载中...');
       return config;
     }.bind(this), function (error) {
       // 对请求错误做些什么
@@ -46,7 +46,7 @@ let vm = new Vue({
 
   // 添加响应拦截器
   this.$http.interceptors.response.use(function (response) {
-      // this.$indicator.close();
+      this.$indicator.close();
       return response;
     }.bind(this), function (error) {
       // 对响应错误做点什么
