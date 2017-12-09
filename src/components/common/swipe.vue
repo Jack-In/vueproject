@@ -33,6 +33,7 @@
         this.$http.get(this.$root.config + this.api)
           .then((res)=>{
             this.logos = res.data.message;
+            console.log(this.logos)
           })
           .catch((err)=>{
             console.log(err)
