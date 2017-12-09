@@ -1,13 +1,6 @@
 <template>
   <div class="mui-content">
-    <!-- 轮播图组件 -->
-    <mt-swipe :show-indicators="true">
-      <mt-swipe-item v-for="(item,index) in logos" key="index">
-        <a :href="item.url">
-          <img :src="item.img">
-        </a>
-      </mt-swipe-item>
-    </mt-swipe>
+    <mySwipe :api="api"></mySwipe>
     <!-- 六个导航 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" v-for="itme in menus">
@@ -21,35 +14,18 @@
   </div>
 </template>
 <script>
+  import swipe from '../common/swipe.vue'
   export default {
     data(){
       return {
         menus:[],
-        logos:[]
+        api:'/api/getlunbo'
       }
     },
     created:function(){
       this.getdata();
-      this.gtelogo();
     },
     methods:{
-      gtelogo(){
-        //获取logo
-        // this.$http.get(this.$root.config + '/api/getlunbo').then((response) => {
-        //   // get body data
-        //   this.logo = response.body.message;
-        //   console.log(this.logo)
-        //   }, (error) => {
-        //     console.log(error)
-        //   });
-        this.$http.get(this.$root.config + '/api/getlunbo')
-          .then((res)=>{
-            this.logos = res.data.message;
-          })
-          .catch((err)=>{
-            console.log(err)
-          })
-      },
       getdata(){
         // 获取9宫格
         // this.$http.get(this.$root.config + '/api/getmenus').then((response) => {
@@ -68,17 +44,15 @@
             console.log(err)
           })
       }
+    },
+    components:{
+      //注册子组件,因为swipe是导入的子组件，所以可以直接这样写
+      mySwipe:swipe
     }
   };
 </script>
 <style type="text/css" media="screen" scoped>
-  .mint-swipe {
-    height: 187px;
-  }
-  .mint-swipe img {
-    width: 100%;
-    height: 100%;
-  }
+  /*8宫格样式*/
   .mui-grid-view.mui-grid-9 {
     background-color: #fff;
   }
