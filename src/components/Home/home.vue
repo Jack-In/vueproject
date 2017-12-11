@@ -3,7 +3,7 @@
     <mySwipe :api="api"></mySwipe>
     <!-- 六个导航 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
-      <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" v-for="itme in menus">
+      <li class="mui-table-view-cell mui-media mui-col-xs-4" v-for="itme in menus">
         <router-link :to="itme.url" >
           <span class="mui-icon" :class="itme.className"></span>
           <div class="mui-media-body">{{itme.title}}</div>

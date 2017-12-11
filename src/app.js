@@ -2,7 +2,7 @@
 * @Author: sunduo
 * @Date:   2017-12-06 16:54:07
 * @Last Modified by:   allen100309
-* @Last Modified time: 2017-12-10 02:16:19
+* @Last Modified time: 2017-12-11 12:10:21
 */
 import Vue from 'vue';
 
@@ -53,8 +53,4 @@ let vm = new Vue({
       return Promise.reject(error);
     });
   }
-})
-//根据路由地址设置浏览器标题
-router.afterEach((to, from, next) => {
-  document.title = to.name;
 })

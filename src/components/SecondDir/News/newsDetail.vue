@@ -15,7 +15,7 @@
 
 <script>
   import comment from '../../common/comment.vue';
-
+  
   export default {
     data(){
       return {

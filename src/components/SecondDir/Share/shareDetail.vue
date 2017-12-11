@@ -9,20 +9,23 @@
         </span>
       </div>
       <ul class="mui-table-view mui-grid-view mui-grid-9">
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" v-for="itme in img">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" v-for="(itme,index) in img">
           <router-link :to="itme.url" >
-            <img :src="itme.src">
+            <img class="preview-img" :src="itme.src" @click="$preview.open(index, img)">
           </router-link>
         </li>
       </ul>
       <div class="content" v-html="info.content"></div>
 
-      <comment :newsid="this.id"></comment>
+      <comment :id="this.id"></comment>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 import comment from '../../common/comment.vue'
 export default {
   data() {
@@ -42,6 +45,10 @@ export default {
         .get(this.$root.config + '/api/getthumimages/'+ id)
         .then((res)=>{
           this.img = res.data.message;
+          this.img.forEach(function(item){
+            item.w = '600';
+            item.h = '400'
+          })
         })
         .catch((err)=>{
           console.error(err)

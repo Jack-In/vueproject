@@ -2,7 +2,7 @@
 * @Author: allen100309
 * @Date:   2017-12-09 11:52:02
 * @Last Modified by:   allen100309
-* @Last Modified time: 2017-12-10 01:35:46
+* @Last Modified time: 2017-12-11 12:11:15
 */
 
 import Vue from 'vue';
@@ -60,22 +60,27 @@ const router = new VueRouter({
   // 定义路由
   routes:[
     { path: '/', redirect: '/home' },
-    { name:'home' , path: '/home', component: Home },
-    { name:'member' , path: '/member', component: Member },
-    { name:'shopcar' , path: '/shopcar', component: Shopcar },
-    { name:'search' , path: '/search', component: Search },
-    { name:'news' , path: '/news', component: News },
-    { name:'newsDetail' , path: '/news/:id', component: NewsDetail },
-    { name:'share' , path: '/share', component: Share },
-    { name:'shares' , path: '/share/:id', component: Share },
-    { name:'shareDetail' , path: '/shareDetail/:id', component: ShareDetail },
-    { name:'buy' , path: '/buy', component: Buy },
-    { name:'feedback' , path: '/feedback', component: Feedback },
-    { name:'video' , path: '/video', component: Video },
-    { name:'contact' , path: '/contact', component: Contact },
+    { name:'home' , path: '/home', meta:{ title:'首页' }, component: Home },
+    { name:'member' , path: '/member', meta:{ title:'会员中心' }, component: Member },
+    { name:'shopcar' , path: '/shopcar', meta:{ title:'购物车' }, component: Shopcar },
+    { name:'search' , path: '/search', meta:{ title:'搜索' }, component: Search },
+    { name:'news' , path: '/news', meta:{ title:'热点新闻' }, component: News },
+    { name:'newsDetail' , path: '/news/:id', meta:{ title:'新闻详情' }, component: NewsDetail },
+    { name:'share' , path: '/share', meta:{ title:'图片分享' }, component: Share },
+    { name:'shares' , path: '/share/:id', meta:{ title:'图片分享' }, component: Share },
+    { name:'shareDetail' , path: '/shareDetail/:id', meta:{ title:'图片分享详情' }, component: ShareDetail },
+    { name:'buy' , path: '/buy', meta:{ title:'购物页面' }, component: Buy },
+    { name:'feedback' , path: '/feedback', meta:{ title:'留言反馈' }, component: Feedback },
+    { name:'video' , path: '/video', meta:{ title:'视频分享' }, component: Video },
+    { name:'contact' , path: '/contact', meta:{ title:'联系我们' }, component: Contact },
   ]
 });
 //给Vue原型帮绑上Axios
 Vue.prototype.$http = Axios;
 Vue.prototype.axios = Axios;
+//根据路由地址设置浏览器标题,路由守卫
+router.afterEach((to, from, next) => {
+  Vue.prototype.titles = to.meta.title;
+  document.title = to.meta.title;
+})
 export default router;

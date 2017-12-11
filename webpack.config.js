@@ -13,6 +13,10 @@ module.exports = {
   module: {
     rules: [
       {
+          test: /vue-preview.src.*?js$/,
+          use: ['babel-loader']
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -39,7 +43,7 @@ module.exports = {
         ]//加载时，从右到左加载
       },
       {
-        test: /\.(png|jpg|eot|svg|ttf|woff|otf)/,
+        test: /\.(png|gif|jpg|eot|svg|ttf|woff|otf)/,
         // use:['url-loader'] //可以简写'url?limit=20000'  单位是字节
         use: [
           {
