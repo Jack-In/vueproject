@@ -2,7 +2,7 @@
 * @Author: allen100309
 * @Date:   2017-12-09 11:52:02
 * @Last Modified by:   allen100309
-* @Last Modified time: 2017-12-11 12:11:15
+* @Last Modified time: 2017-12-11 21:56:52
 */
 
 import Vue from 'vue';
@@ -41,6 +41,9 @@ import NewsDetail from '../components/SecondDir/News/newsDetail.vue';
 import Share from '../components/SecondDir/Share/share.vue';
 import ShareDetail from '../components/SecondDir/Share/shareDetail.vue';
 import Buy from '../components/SecondDir/Buy/buy.vue';
+import BuyDetail from '../components/SecondDir/Buy/buyDetail.vue';
+import buyDesc from '../components/SecondDir/Buy/desc.vue';
+import buyComment from '../components/SecondDir/Buy/comment.vue';
 import Feedback from '../components/SecondDir/Feedback/feedback.vue';
 import Video from '../components/SecondDir/Video/video.vue';
 import Contact from '../components/SecondDir/Contact/contact.vue';
@@ -70,6 +73,9 @@ const router = new VueRouter({
     { name:'shares' , path: '/share/:id', meta:{ title:'图片分享' }, component: Share },
     { name:'shareDetail' , path: '/shareDetail/:id', meta:{ title:'图片分享详情' }, component: ShareDetail },
     { name:'buy' , path: '/buy', meta:{ title:'购物页面' }, component: Buy },
+    { name:'buyDetail' , path: '/buy/:id', meta:{ title:'购物详情页面' }, component: BuyDetail },
+    { name:'buyDesc' , path: '/buy/desc/:id', meta:{ title:'商品详情页面' }, component: buyDesc },
+    { name:'buyComment' , path: '/buy/comment/:id', meta:{ title:'商品详情页面' }, component: buyComment },
     { name:'feedback' , path: '/feedback', meta:{ title:'留言反馈' }, component: Feedback },
     { name:'video' , path: '/video', meta:{ title:'视频分享' }, component: Video },
     { name:'contact' , path: '/contact', meta:{ title:'联系我们' }, component: Contact },

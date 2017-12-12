@@ -73,7 +73,6 @@ export default {
 
 <style scoped>
 .title{
-     height: 100%;
      border-bottom: 2px solid rgba(92,92,92,0.1);
      padding: 10px 5px;
  }
@@ -92,7 +91,6 @@ export default {
     width: 100%;
     font-size: 14px;
     color: #8f8f94;
-    
 }
 .info {
   margin-bottom: 50px;
@@ -106,7 +104,6 @@ export default {
 }
 .mui-grid-9 img {
   width: 100%;
-  height: 100%;
   vertical-align: top
 }
 .mui-table-view-cell,.mui-grid-view.mui-grid-9 .mui-table-view-cell {

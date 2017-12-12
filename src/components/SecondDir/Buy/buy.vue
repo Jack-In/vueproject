@@ -4,10 +4,10 @@
             <ul class="mui-table-view mui-grid-view">
                 <!-- ref是vue中的特殊属性，指向的是他属性绑定的dom元素 -->
                 <li v-for="item in goodslist" :key="item.id" class="mui-table-view-cell mui-media mui-col-xs-6">
-                    <a href="">
+                    <router-link :to="{name:'buyDetail',params:{id:item.id}}">
                         <img class="mui-media-object" :src="item.img_url">
                         <div class="mui-media-body">{{ item.title }}</div>
-                    </a>
+                    </router-link>
                     <div class="bottom">
                         <h6>
                             <span>￥{{ item.sell_price }}</span>
@@ -29,7 +29,8 @@
         data() {
             return {
               goodslist: [],
-              allLoaded:false
+              allLoaded:false,
+              pageNum:1
             }
         },
         created() {//已经使用虚拟dom创建好了dom元素，但是页面上还没有，这时候就如果去打印元素获取的是一个空对象，但是你展开后有有东西，是因为在展开时，及时获取了页面上的信息
@@ -37,31 +38,37 @@
         },
         mounted(){//已经把虚拟dom创建渲染到了页面上去
             this.$refs.muicontent.style.height = document.documentElement.clientHeight + 'px'
-            console.log();
         },
         methods: {
           getgoods() {
             this.axios
-              .get(this.$root.config + '/api/getgoods?pageindex=1')
+              .get(this.$root.config + '/api/getgoods?pageindex='+ this.pageNum)
               .then((res) => {
                 if (res.status === 200 && res.data.status === 0) {
-                  this.goodslist = res.data.message;
+                  if(res.data.message.length == 0){
+                    this.$toast('已经到底了，还拉个鬼！');
+                    return;
+                  }
+                  this.goodslist = this.goodslist.concat(res.data.message)
                 }
               })
               .catch((err) => {
                 console.error(err);
               })
           },
-          loadBottom(){
-            console.log(111)
-
+          loadBottom(){//上啦时候会触发该方法
+            this.pageNum ++;
+            this.getgoods();
             // 这是因为在加载数据后需要对组件进行一些重新定位的操作。
-        this.$refs.loadmore.onBottomLoaded();
+            this.$refs.loadmore.onBottomLoaded();
           }
         }
     };
 </script>
 <style scoped>
+    .mint-loadmore {
+        padding-bottom: 50px;
+    }
     .mui-table-view:before {
         display: none;
     }

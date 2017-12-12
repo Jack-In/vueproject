@@ -14,7 +14,7 @@
         <span class="mui-tab-label">会员</span>
       </router-link>
       <router-link to='/shopcar' class="mui-tab-item">
-        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" @upBadge='update'>{{count}}</span></span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
       <router-link to='/search' class="mui-tab-item">
@@ -27,15 +27,21 @@
   </div>
 </template>
 <script>
+//导入公共通信组件
+  import vmObj from './config/common.js';
   export default {
     data:function(){
       return {
-        isShow:false
+        isShow:false,
+        count:1
       }
     },
     created(){
       this.jumpBack(this.$route.name)
-      console.log(this.$route)
+      
+    },
+    mounted(){
+      this.update()
     },
     watch:{
       //监视路由是否变化
@@ -48,47 +54,19 @@
         this.$router.back();
       },
       jumpBack(path){
-        // switch(route.name){
-        //   case 'home':
-        //     this.title = '首页';
-        //     break;
-        //   case 'member':
-        //     this.title = '会员';
-        //     break;
-        //   case 'shopcar':
-        //     this.title = '购物车';
-        //     break;
-        //   case 'search':
-        //     this.title = '搜索';
-        //     break;
-        //   case 'news':
-        //     this.title = '新闻列表';
-        //     break;
-        //   case 'newsDetail':
-        //     this.title = '新闻详情页面';
-        //     break;
-        //   case 'share':
-        //     this.title = '图片分享页面';
-        //     break;
-        //   case 'buy':
-        //     this.title = '商品购买';
-        //     break;
-        //   case 'feedback':
-        //     this.title = '留言反馈';
-        //     break;
-        //   case 'video':
-        //     this.title = '视频专区';
-        //     break;
-        //   case 'contact':
-        //     this.title = '联系我们';
-        //     break;
-        // };
         let arr = ['home','member','shopcar','search'];
         if(arr.indexOf(path) === -1){
           this.isShow = true;
         }else{
           this.isShow = false;
         }
+      },
+      update(){
+
+        vmObj.$on('upBadge',(count)=>{
+          this.count = count;
+          console.log(count)
+        })
       }
     }
   };

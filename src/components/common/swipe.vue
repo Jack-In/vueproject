@@ -44,7 +44,7 @@
 </script>
 <style type="text/css" media="screen" scoped>
   .mint-swipe {
-    height: 187px;
+    height: 350px;
   }
   .mint-swipe img {
     width: 100%;
