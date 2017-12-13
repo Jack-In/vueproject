@@ -47,9 +47,12 @@
                 if (res.status === 200 && res.data.status === 0) {
                   if(res.data.message.length == 0){
                     this.$toast('已经到底了，还拉个鬼！');
+                    this.allLoaded = true;
                     return;
                   }
-                  this.goodslist = this.goodslist.concat(res.data.message)
+                  this.goodslist = this.goodslist.concat(res.data.message);
+                  // 这是因为在加载数据后需要对组件进行一些重新定位的操作。因为这个数据请求是异步操作，如果我们要看到加载中的效果，不能把修改loadmore修改状态的方法放在loadbottom方法中，否则都不会出现加载中的效果，
+                    this.$refs.loadmore.onBottomLoaded();
                 }
               })
               .catch((err) => {
@@ -59,8 +62,6 @@
           loadBottom(){//上啦时候会触发该方法
             this.pageNum ++;
             this.getgoods();
-            // 这是因为在加载数据后需要对组件进行一些重新定位的操作。
-            this.$refs.loadmore.onBottomLoaded();
           }
         }
     };

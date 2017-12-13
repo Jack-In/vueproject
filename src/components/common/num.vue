@@ -7,16 +7,22 @@
 export default {
     data(){
         return {
-            count:1
+            count:1,
+            type:''
         }
     },
-    props:['stock'],//获取前边传回来的库存数量,props这个参数板绑定的值，直接绑定到data属性里边，使用this可以直接找到
+    //因为在加减的时候要更新本地localStorage中的数据，所以在num组件向外传值的时候，要把商品id以及操作的数量传出去（传到其他组件）
+    props:['stock','num','id'],//获取前边传回来的库存数量,props这个参数板绑定的值，直接绑定到data属性里边，使用this可以直接找到
+    created(){
+        this.count = this.num ? this.num : 1;
+    },
     methods:{
         add(){
             this.count ++;
             if(this.count >= this.stock){
                 this.count = this.stock;
             }
+            this.type = 'add';
             this.notify();//不管是++还是--都要把更新的数据传出去
         },
         sub(){
@@ -24,13 +30,14 @@ export default {
             if(this.count <= 1){
                 this.count = 1;
             }
-            this.notify()
+            this.type = 'sub';
+            this.notify();
         },
         notify(){
         // count变化触发事件
         // 第一个参数 是自定义事件的名称
         // 第二个参数之后，都是给订阅的人传递参数
-            this.$emit('numChange', this.count);
+            this.$emit('numChange', { id:this.id , count:this.count , type:this.type});
         }
     }
 };

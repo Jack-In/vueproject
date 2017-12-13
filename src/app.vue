@@ -27,13 +27,15 @@
   </div>
 </template>
 <script>
+//导入读取localstorage插件
+  import { getData } from './config/localStorageHelp.js'
 //导入公共通信组件
   import vmObj from './config/common.js';
   export default {
     data:function(){
       return {
         isShow:false,
-        count:1
+        count:0
       }
     },
     created(){
@@ -41,6 +43,7 @@
       
     },
     mounted(){
+      this.getCount();
       this.update()
     },
     watch:{
@@ -64,9 +67,19 @@
       update(){
 
         vmObj.$on('upBadge',(count)=>{
-          this.count = count;
-          console.log(count)
+          this.count += count;
+        });
+        vmObj.$on('upBdage',()=>{
+          this.getCount()
         })
+      },
+      getCount(){
+        let arr = getData('goodslist');
+        let num = 0;
+        arr.forEach((item)=>{
+          num += item.count;
+        })
+        this.count = num;
       }
     }
   };
